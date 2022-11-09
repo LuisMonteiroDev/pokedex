@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState, useTransition } from 'react';
+import './App.css'; 
+import { PokemonsFetch } from './api/services/pokemoncard';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+function App() {  
+  const [pokemon, setPokemon] = useState([]);
+
+  useEffect(() => {
+   async function getPokemons() {
+      try {
+        const resultPokemons = await PokemonsFetch();
+        console.log((resultPokemons.pokemons).flat());
+        const flatResultPokemon = (resultPokemons.pokemons).flat();
+        setPokemon(flatResultPokemon);
+      } catch(error) {
+        console.log(error)
+      }
+    }
+    getPokemons();
+  },[]);
+
+  return(
+    <div>
+      <div className='pokedex'>
+      {pokemon.map((pokemonLoop) => (
+      <div className='pokemon-card'>
+        <img src={pokemonLoop.pokemon_species.url}></img>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+        {pokemonLoop.pokemon_species.name}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </div>))}
+      </div>
     </div>
-  );
+  )
 }
 
 export default App;
