@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useTransition } from 'react';
 import './App.css'; 
 import { PokemonsFetch } from './api/services/pokemoncard';
+import { PokemonsImageFetch } from './api/services/pokemonimages'
 
 function App() {  
   const [pokemon, setPokemon] = useState([]);
+  const [pokemonimages, setPokemonImage] = useState([]);
 
   useEffect(() => {
    async function getPokemons() {
@@ -19,19 +21,35 @@ function App() {
     getPokemons();
   },[]);
 
+  useEffect(() => {
+    async function getPokemonsImage() {
+       try {
+         const resultPokemonsImage = await PokemonsImageFetch();
+         //console.log((resultPokemons.pokemons).flat());
+         //const flatResultPokemon = (resultPokemons.pokemons).flat();
+         setPokemonImage(resultPokemonsImage.pokemonImage);
+       } catch(error) {
+         console.log(error)
+       }
+     }
+     getPokemonsImage();
+   },[]);
+
   return(
     <div>
       <div className='pokedex'>
+      <div className='pokemon-card-container'>
       {pokemon.map((pokemonLoop) => (
-      <div className='pokemon-card'>
-        <img src={pokemonLoop.pokemon_species.url}></img>
+        <div className='grid-item-pokemon'>
+        <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonLoop.entry_number}.png`}></img>  
         <p>
-        {pokemonLoop.pokemon_species.name}
+          {pokemonLoop.pokemon_species.name}
         </p>
-      </div>))}
+        </div>
+      ))}
+      </div>
       </div>
     </div>
   )
 }
-
 export default App;
