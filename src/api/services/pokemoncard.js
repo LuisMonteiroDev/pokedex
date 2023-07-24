@@ -20,7 +20,6 @@ export async function PokemonsFetch() {
         };
    } catch (error) {
       console.log('ProfileFetch | error:', error.message);
-  
         return {
             message: 'No momento esse recurso está indisponível, tente novamente mais tarde.',
             isSuccess: false,
