@@ -13,11 +13,10 @@ export async function PokemonsFetch() {
         configRequest.url,
       );
       console.log('ProfileFetch | response.data:', response.data);
-      console.log('ProfileFetch | response.data:', response.data.egg_groups);
         return {
           isSuccess: true,
           message: "deu certo",
-          pokemons: response.data.egg_groups,
+          pokemons: response.data.pokemon_entries,
         };
    } catch (error) {
       console.log('ProfileFetch | error:', error.message);
