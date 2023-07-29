@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useTransition } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css'; 
 import { PokemonsFetch } from './api/services/pokemoncard';
 import { PokemonsImageFetch } from './api/services/pokemonimages'
@@ -27,8 +27,6 @@ function App() {
     async function getPokemonsImage() {
        try {
          const resultPokemonsImage = await PokemonsImageFetch();
-         //console.log((resultPokemons.pokemons).flat());
-         //const flatResultPokemon = (resultPokemons.pokemons).flat();
          setPokemonImage(resultPokemonsImage.pokemonImage);
        } catch(error) {
          console.log(error)
